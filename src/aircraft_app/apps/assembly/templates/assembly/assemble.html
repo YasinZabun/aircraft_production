@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block title %}Assemble Aircraft{% endblock title %}
+{% block content %}
+<h1>Assemble an Aircraft</h1>
+<div class="mb-3">
+  <label for="aircraft_model" class="form-label">Select Aircraft Model:</label>
+  <select id="aircraft_model" class="form-control">
+    <option value="TB2">TB2</option>
+    <option value="TB3">TB3</option>
+    <option value="AKINCI">AKINCI</option>
+    <option value="KIZILELMA">KIZILELMA</option>
+  </select>
+</div>
+<button id="assemble-btn" class="btn btn-success">Assemble</button>
+
+<!-- Alert Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title" id="alertModalTitle">Notification</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="alertModalBody">
+        <!-- Message content will be added dynamically -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %} {% block extra_js %}
+<script>
+  $("#assemble-btn").click(function () {
+    const model = $("#aircraft_model").val();
+
+    $.post("/api/assemble/", { model: model }, function (response) {
+      showAlertModal(
+        "Success",
+        `Aircraft assembled! ID: ${response?.id}`,
+        true
+      );
+    }).fail(function (xhr) {
+      const errorMessage =
+        xhr.responseJSON?.error ||
+        "An error occurred while assembling the aircraft.";
+      showAlertModal("Error", errorMessage, false);
+    });
+  });
+</script>
+{% endblock extra_js %}

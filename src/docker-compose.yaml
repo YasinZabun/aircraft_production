@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env_unignored_for_test
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=0
+    depends_on:
+      - db
+      - nginx
+    command: ["gunicorn", "aircraft_app.wsgi:application", "--bind", "0.0.0.0:8000"]
+  
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: aircraft_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - static_volume:/static
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+
+volumes:
+  db_data:
+  static_volume:

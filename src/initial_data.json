@@ -1,0 +1,302 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "WingUser",
+      "password": "pbkdf2_sha256$870000$kNaHNNaRUb4NR620Z5jWe4$PCgsomdX1JHtJ4N7UFhoIdwfmxzSsAU7kbW3oYECKLI=",
+      "email": "wing@user.com",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "TailUser",
+      "password": "pbkdf2_sha256$870000$kNaHNNaRUb4NR620Z5jWe4$PCgsomdX1JHtJ4N7UFhoIdwfmxzSsAU7kbW3oYECKLI=",
+      "email": "tail@user.com",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "AvionicsUser",
+      "password": "pbkdf2_sha256$870000$kNaHNNaRUb4NR620Z5jWe4$PCgsomdX1JHtJ4N7UFhoIdwfmxzSsAU7kbW3oYECKLI=",
+      "email": "avionics@user.com",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "FuselageUser",
+      "password": "pbkdf2_sha256$870000$kNaHNNaRUb4NR620Z5jWe4$PCgsomdX1JHtJ4N7UFhoIdwfmxzSsAU7kbW3oYECKLI=",
+      "email": "fuselage@user.com",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "username": "AssemblyUser",
+      "password": "pbkdf2_sha256$870000$kNaHNNaRUb4NR620Z5jWe4$PCgsomdX1JHtJ4N7UFhoIdwfmxzSsAU7kbW3oYECKLI=",
+      "email": "assembly@user.com",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "teams.team",
+    "pk": 1,
+    "fields": {
+      "name": "Wing Team",
+      "responsible_part_type": "Wing"
+    }
+  },
+  {
+    "model": "teams.team",
+    "pk": 2,
+    "fields": {
+      "name": "Tail Team",
+      "responsible_part_type": "Tail"
+    }
+  },
+  {
+    "model": "teams.team",
+    "pk": 3,
+    "fields": {
+      "name": "Avionics Team",
+      "responsible_part_type": "Avionics"
+    }
+  },
+  {
+    "model": "teams.team",
+    "pk": 4,
+    "fields": {
+      "name": "Fuselage Team",
+      "responsible_part_type": "Fuselage"
+    }
+  },
+  {
+    "model": "teams.team",
+    "pk": 5,
+    "fields": {
+      "name": "Assembly Team",
+      "responsible_part_type": "Assembly"
+    }
+  },
+  {
+    "model": "accounts.profile",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "team": 1
+    }
+  },
+  {
+    "model": "accounts.profile",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "team": 2
+    }
+  },
+  {
+    "model": "accounts.profile",
+    "pk": 3,
+    "fields": {
+      "user": 4,
+      "team": 3
+    }
+  },
+  {
+    "model": "accounts.profile",
+    "pk": 4,
+    "fields": {
+      "user": 5,
+      "team": 4
+    }
+  },
+  {
+    "model": "accounts.profile",
+    "pk": 5,
+    "fields": {
+      "user": 6,
+      "team": 5
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 1,
+    "fields": {
+      "part_type": "Wing",
+      "aircraft_model": "TB2",
+      "team": 1,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 2,
+    "fields": {
+      "part_type": "Tail",
+      "aircraft_model": "TB2",
+      "team": 2,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 3,
+    "fields": {
+      "part_type": "Avionics",
+      "aircraft_model": "TB2",
+      "team": 3,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 4,
+    "fields": {
+      "part_type": "Fuselage",
+      "aircraft_model": "TB2",
+      "team": 4,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 5,
+    "fields": {
+      "part_type": "Wing",
+      "aircraft_model": "TB3",
+      "team": 1,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 6,
+    "fields": {
+      "part_type": "Tail",
+      "aircraft_model": "TB3",
+      "team": 2,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 7,
+    "fields": {
+      "part_type": "Avionics",
+      "aircraft_model": "TB3",
+      "team": 3,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 8,
+    "fields": {
+      "part_type": "Fuselage",
+      "aircraft_model": "TB3",
+      "team": 4,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 9,
+    "fields": {
+      "part_type": "Wing",
+      "aircraft_model": "AKINCI",
+      "team": 1,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 10,
+    "fields": {
+      "part_type": "Tail",
+      "aircraft_model": "AKINCI",
+      "team": 2,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 11,
+    "fields": {
+      "part_type": "Avionics",
+      "aircraft_model": "AKINCI",
+      "team": 3,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 12,
+    "fields": {
+      "part_type": "Fuselage",
+      "aircraft_model": "AKINCI",
+      "team": 4,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 13,
+    "fields": {
+      "part_type": "Wing",
+      "aircraft_model": "KIZILELMA",
+      "team": 1,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 14,
+    "fields": {
+      "part_type": "Tail",
+      "aircraft_model": "KIZILELMA",
+      "team": 2,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 15,
+    "fields": {
+      "part_type": "Avionics",
+      "aircraft_model": "KIZILELMA",
+      "team": 3,
+      "stock": 50
+    }
+  },
+  {
+    "model": "parts.part",
+    "pk": 16,
+    "fields": {
+      "part_type": "Fuselage",
+      "aircraft_model": "KIZILELMA",
+      "team": 4,
+      "stock": 50
+    }
+  }
+]

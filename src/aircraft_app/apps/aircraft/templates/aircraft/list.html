@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Produced Aircraft{% endblock title %}
+
+{% block content %}
+<h1>Produced Aircraft</h1>
+<table id="aircraft-table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Model</th>
+            <th>Wing</th>
+            <th>Fuselage</th>
+            <th>Tail</th>
+            <th>Avionics</th>
+            <th>Assembled At</th>
+        </tr>
+    </thead>
+</table>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    $('#aircraft-table').DataTable({
+        ajax: {
+            url: '/api/aircraft/',
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'id' },
+            { data: 'model' },
+            { data: 'wing' },
+            { data: 'fuselage' },
+            { data: 'tail' },
+            { data: 'avionics' },
+            { data: 'assembled_at' }
+        ]
+    });
+});
+</script>
+{% endblock extra_js %}
