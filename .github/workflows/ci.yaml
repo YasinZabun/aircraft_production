@@ -33,24 +33,15 @@ jobs:
         with:
           compose-file: "./src/docker-compose.yaml"
       
-      - name: Send request to localhost:8000
+      - name: Wait for application to become ready
         run: |
-          start_time=$(date +%s)
-          while true; do
-            response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000)
-            echo "HTTP Status: $response"
-            if [ "$response" -eq 200 ]; then
-              echo "Received 200 status code. Proceeding with teardown."
-              break
-            fi
-            current_time=$(date +%s)
-            elapsed_time=$((current_time - start_time))
-            if [ "$elapsed_time" -ge 180 ]; then
-              echo "Timeout reached (3 minutes). Exiting loop."
-              break
-            fi
-            sleep 1
-          done
+          echo "Waiting for 1 minute to give the application time to start..."
+          sleep 60
+          echo "Wait complete. Proceeding with the next step."
+      
+      - name: Show container logs
+        run: |
+          docker logs src-web-1  
 
       - name: Tear down containers
         run: |
