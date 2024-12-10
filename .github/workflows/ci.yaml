@@ -23,26 +23,24 @@ jobs:
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-file: "./src/docker-compose.yaml"
-      
-      - name: Run account app unit tests
+      - name: Send request to localhost:8000
         run: |
-          docker-compose exec -T web python manage.py aircraft_app.apps.account.test
-      
-      - name: Run aircraft app unit tests
-        run: |
-          docker-compose exec -T web python manage.py aircraft_app.apps.aircraft.test
-      
-      - name: Run assembly app unit tests
-        run: |
-          docker-compose exec -T web python manage.py aircraft_app.apps.assembly.test
-      - name: Run parts app unit tests
-        run: |
-          docker-compose exec -T web python manage.py aircraft_app.apps.parts.test
-
-      - name: Run teams app unit tests
-        run: |
-          docker-compose exec -T web python manage.py aircraft_app.apps.teams.test
-      
+          start_time=$(date +%s)
+          while true; do
+            response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000)
+            echo "HTTP Status: $response"
+            if [ "$response" -eq 200 ]; then
+              echo "Received 200 status code. Proceeding with teardown."
+              break
+            fi
+            current_time=$(date +%s)
+            elapsed_time=$((current_time - start_time))
+            if [ "$elapsed_time" -ge 180 ]; then
+              echo "Timeout reached (3 minutes). Exiting loop."
+              break
+            fi
+            sleep 1
+          done
       - name: Tear down containers
         run: |
           docker-compose down

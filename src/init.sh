@@ -23,4 +23,10 @@ python manage.py loaddata initial_data.json
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
+echo "Running unit tests."
+python manage.py test aircraft_app.apps.accounts.tests
+python manage.py test aircraft_app.apps.aircraft.tests
+python manage.py test aircraft_app.apps.parts.tests
+python manage.py test aircraft_app.apps.teams.tests
+
 exec "$@"

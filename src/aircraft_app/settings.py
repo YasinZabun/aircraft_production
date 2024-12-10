@@ -20,9 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
+# Determine the environment (default to 'development')
+ENVIRONMENT = config('ENVIRONMENT', default='development')
+
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-f*!1yq_wznr!_-4jpe(1mw0#**tojf5&e2n)+@h9o_6v!pi&8+'
-SECRET_KEY = config('SECRET_KEY')
+if ENVIRONMENT == 'development':
+    SECRET_KEY = 'django-insecure-f*!1yq_wznr!_-4jpe(1mw0#**tojf5&e2n)+@h9o_6v!pi&8+'
+else:
+    SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -77,9 +82,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'aircraft_app.wsgi.application'
-
-# Determine the environment (default to 'development')
-ENVIRONMENT = config('ENVIRONMENT', default='development')
 
 if ENVIRONMENT == 'development':
     # Local development database settings
