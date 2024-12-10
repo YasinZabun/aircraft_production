@@ -32,17 +32,3 @@ jobs:
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-file: "./src/docker-compose.yaml"
-      
-      - name: Wait for application to become ready
-        run: |
-          echo "Waiting for 1 minute to give the application time to start..."
-          sleep 60
-          echo "Wait complete. Proceeding with the next step."
-      
-      - name: Show container logs
-        run: |
-          docker logs src-web-1  
-
-      - name: Tear down containers
-        run: |
-          docker-compose down
