@@ -16,16 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Set up Docker Compose
-        uses: docker/compose-action@v2
-
-      - name: Build and start containers
-        run: |
-          docker-compose -f docker-compose.yaml up -d --build
-
+      - name: Run docker-compose
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./docker/docker-compose.yml"
+      
       - name: Run account app unit tests
         run: |
           docker-compose exec -T web python manage.py aircraft_app.apps.account.test
