@@ -28,11 +28,6 @@ jobs:
       - name: Fix permissions
         run: chmod +x ./src/init.sh
 
-      - name: Ensure Unix line endings
-        run: |
-          apt-get update && apt-get install -y dos2unix
-          dos2unix ./src/init.sh
-
       - name: Run docker-compose
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
