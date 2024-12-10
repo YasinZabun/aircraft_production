@@ -19,10 +19,20 @@ jobs:
         run: |
           pwd
           ls
+      
+      - name: Fix permissions
+        run: chmod +x ./src/init.sh
+
+      - name: Ensure Unix line endings
+        run: |
+          apt-get update && apt-get install -y dos2unix
+          dos2unix ./src/init.sh
+
       - name: Run docker-compose
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-file: "./src/docker-compose.yaml"
+      
       - name: Send request to localhost:8000
         run: |
           start_time=$(date +%s)
@@ -41,6 +51,7 @@ jobs:
             fi
             sleep 1
           done
+
       - name: Tear down containers
         run: |
           docker-compose down
