@@ -15,11 +15,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+      - name: ls
+        run: |
+          pwd
+          ls
       - name: Run docker-compose
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
-          compose-file: "./docker/docker-compose.yml"
+          compose-file: "./src/docker-compose.yml"
       
       - name: Run account app unit tests
         run: |
