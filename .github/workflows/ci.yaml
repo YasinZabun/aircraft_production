@@ -32,6 +32,7 @@ jobs:
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-file: "./src/docker-compose.yaml"
+<<<<<<< HEAD
       
       - name: Wait for application to become ready
         run: |
@@ -46,3 +47,5 @@ jobs:
       - name: Tear down containers
         run: |
           docker-compose down
+=======
+>>>>>>> 04763a84399cb21a780fcf534589e6f52b88df79

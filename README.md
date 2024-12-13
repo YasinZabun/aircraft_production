@@ -1,3 +1,5 @@
+![CI Status](https://github.com/YasinZabun/aircraft_production/actions/workflows/ci.yaml/badge.svg)
+
 # Aircraft Production System
 
 ## Overview
