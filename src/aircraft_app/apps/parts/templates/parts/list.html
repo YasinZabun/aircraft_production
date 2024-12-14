@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}Manage Parts{% endblock title %}
+{% block content %}
+<div class="card mt-4 shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Manage Parts</h5>
+        <button id="create-part-btn" class="btn btn-light btn-sm">Create New Part</button>
+    </div>
+    <div class="card-body">
+        <!-- DataTable for Parts -->
+        <table id="parts-table" class="table table-striped table-bordered display nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Part Type</th>
+                    <th>Aircraft Model</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Alert Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="alertModalTitle">Notification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="alertModalBody">
+                <!-- Message content will be added dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Part Modal -->
+<div class="modal fade" id="createPartModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form id="create-part-form">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Create New Part</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="part_type" class="form-label">Part Type:</label>
+                        <select id="part_type" class="form-control">
+                            <option value="Wing">Wing</option>
+                            <option value="Fuselage">Fuselage</option>
+                            <option value="Tail">Tail</option>
+                            <option value="Avionics">Avionics</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="aircraft_model" class="form-label">Aircraft Model:</label>
+                        <select id="aircraft_model" class="form-control">
+                            <option value="TB2">TB2</option>
+                            <option value="TB3">TB3</option>
+                            <option value="AKINCI">AKINCI</option>
+                            <option value="KIZILELMA">KIZILELMA</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stock" class="form-label">Stock:</label>
+                        <input type="number" id="stock" class="form-control" min="1" value="1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        const table = $('#parts-table').DataTable({
+            ajax: {
+                url: '/api/parts/', // Fetch data from this endpoint
+                dataSrc: ''
+            },
+            columns: [
+                { data: 'part_type' }, // Part Type
+                { data: 'aircraft_model' }, // Aircraft Model
+                { data: 'stock' }, // Stock
+                {
+                    data: null,
+                    render: function(data) {
+                        return `
+                            <button class="btn btn-warning btn-sm recycle-btn" data-id="${data.id}">
+                                <i class="fas fa-recycle"></i> Recycle
+                            </button>`;
+                    }
+                }
+            ],
+            responsive: true,
+        });
+
+        // Show Create Modal
+        $('#create-part-btn').click(function() {
+            $('#createPartModal').modal('show');
+        });
+
+        // Handle Create Form Submission
+        $('#create-part-form').submit(function(e) {
+            e.preventDefault();
+            const formData = {
+                part_type: $('#part_type').val(),
+                aircraft_model: $('#aircraft_model').val(),
+                stock: $('#stock').val()
+            };
+            $.post('/api/parts/', formData, function() {
+                $('#createPartModal').modal('hide');
+                table.ajax.reload();
+                showAlertModal('Success', 'Part successfully created!', true);
+            }).fail(function(xhr) {
+                const errorMessage = xhr.responseJSON?.non_field_errors[0] || xhr.responseJSON?.detail || 'Error creating part.';
+                showAlertModal('Error', errorMessage, false);
+            });
+        });
+
+        // Handle Recycle Button
+        $('#parts-table').on('click', '.recycle-btn', function() {
+            const partId = $(this).data('id');
+            if (confirm('Are you sure you want to recycle this part?')) {
+                $.ajax({
+                    url: `/api/parts/${partId}/`,
+                    type: 'DELETE',
+                    success: function() {
+                        table.ajax.reload();
+                        showAlertModal('Success', 'Part successfully recycled!', true);
+                    },
+                    error: function(xhr) {
+                        const errorMessage = xhr.responseJSON?.non_field_errors[0] || xhr.responseJSON?.detail || 'Error recycling part.';
+                        showAlertModal('Error', errorMessage, false);
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock extra_js %}
